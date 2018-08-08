@@ -34,6 +34,7 @@ TimeSlider::TimeSlider( QWidget *parent )
 
     verticalLayout->addWidget( m_rangeSlider );
     verticalLayout->addWidget( m_scaleSlider );
+    verticalLayout->addWidget( m_pTimeBar );
 
     setLayout( verticalLayout );
 
@@ -68,8 +69,10 @@ TimeSlider::~TimeSlider()
 void TimeSlider::onScaleChanged( int val )
 {
     m_scale = static_cast<float>(val + 1) / 100.0f;
-    int range = qMax( 1, static_cast<int>(m_length * m_scale) );
 
+    m_rangeSlider->setMaximum( m_scale*99 );
+
+    int range = qMax( 1, static_cast<int>(m_length * m_scale) );
     int min = minimum();
     int max = min + range;
 
@@ -213,6 +216,7 @@ void TimeSlider::drawHandle( QPainter& painter, QRect& rect )
     painter.translate( rect.center() );
 
     painter.drawPolygon( m_handleShape );
+
     emit sliderMoved( rect.center() );
 }
 

@@ -1,11 +1,12 @@
 #include "TimeSliderBar.h"
 
 TimeSliderBar::TimeSliderBar( QWidget *parent )
-    : QWidget( parent )
+    : QFrame( parent )
     , m_range( 6 )
     , m_barWidth( 1 )
     , m_color( Qt::red )
 {
+    setFrameShape( QFrame::Box );
 }
 
 TimeSliderBar::~TimeSliderBar()
@@ -20,7 +21,7 @@ void TimeSliderBar::mousePressEvent( QMouseEvent *event )
         m_mousePos = event->pos();
     }
 
-    QWidget::mousePressEvent( event );
+    QFrame::mousePressEvent( event );
 }
 
 void TimeSliderBar::mouseMoveEvent( QMouseEvent *event )
@@ -33,7 +34,7 @@ void TimeSliderBar::mouseMoveEvent( QMouseEvent *event )
         emit barMoved( curPos.x() );
     }
 
-    QWidget::mouseMoveEvent( event );
+    QFrame::mouseMoveEvent( event );
 }
 
 void TimeSliderBar::paintEvent( QPaintEvent* event )

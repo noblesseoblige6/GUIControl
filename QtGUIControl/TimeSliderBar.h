@@ -1,10 +1,12 @@
 #pragma once
 
 #include <QWidget>
+#include <QFrame>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QDebug>
 
-class TimeSliderBar : public QWidget
+class TimeSliderBar : public QFrame
 {
     Q_OBJECT
         Q_DISABLE_COPY( TimeSliderBar )
