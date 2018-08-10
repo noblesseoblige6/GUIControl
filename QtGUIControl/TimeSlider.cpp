@@ -3,40 +3,19 @@
 TimeSlider::TimeSlider( QWidget *parent )
     : QSlider( parent )
     , m_currentFrame( 0 )
-    , m_length( 100 )
+    , m_length( 1000 )
     , m_scale( 1.0f )
-    , m_interval( 5.0f )
+    , m_interval( 10 )
     , m_longBarCount( 5 )
-    , m_offset( QPoint( 5, 10 ) )
     , m_labelSize( 10 )
     , m_labelCount( 5 )
     , m_handleColor( QColor( 255, 0, 0, 128 ) )
     , m_grooveColor( Qt::black )
 {
-    QVBoxLayout *verticalLayout = new QVBoxLayout();
-
-    m_rangeSlider = new QScrollBar( this );
-    m_rangeSlider->setObjectName( QStringLiteral( "scroll" ) );
-    m_rangeSlider->setMaximum( 0 );
-    m_rangeSlider->setOrientation( Qt::Horizontal );
-
-    m_scaleSlider = new QSlider( this );
-    m_scaleSlider->setObjectName( QStringLiteral( "scaler" ) );
-    m_scaleSlider->setMinimum( 0 );
-    m_scaleSlider->setMaximum( 100 );
-    m_scaleSlider->setValue( 100 );
-    m_scaleSlider->setOrientation( Qt::Horizontal );
-
     // time vertical bar
-    m_pTimeBar = new TimeSliderBar( parent );
+    m_pTimeBar = new TimeSliderBar(this);
     m_pTimeBar->setObjectName( "TimeLineBar" );
     m_pTimeBar->setColor( m_handleColor );
-
-    verticalLayout->addWidget( m_rangeSlider );
-    verticalLayout->addWidget( m_scaleSlider );
-    verticalLayout->addWidget( m_pTimeBar );
-
-    setLayout( verticalLayout );
 
     setValue( 0 );
     setRange( 0, m_length );
@@ -57,9 +36,6 @@ TimeSlider::TimeSlider( QWidget *parent )
     connect( this, SIGNAL( rangeChanged( int, int ) ), SLOT( onSliderRangeChanged() ) );
     connect( this, SIGNAL( sliderMoved( QPoint ) ), m_pTimeBar, SLOT( onTimelineChanged( QPoint ) ) );
     connect( m_pTimeBar, SIGNAL( barMoved( int ) ), this, SLOT( onTimeBarChanged( int ) ) );
-
-    connect( m_scaleSlider, SIGNAL( valueChanged( int ) ), this, SLOT( onScaleChanged( int ) ) );
-    connect( m_rangeSlider, SIGNAL( valueChanged( int ) ), this, SLOT( onRangeChanged( int ) ) );
 }
 
 TimeSlider::~TimeSlider()
@@ -69,8 +45,6 @@ TimeSlider::~TimeSlider()
 void TimeSlider::onScaleChanged( int val )
 {
     m_scale = static_cast<float>(val + 1) / 100.0f;
-
-    m_rangeSlider->setMaximum( m_scale*99 );
 
     int range = qMax( 1, static_cast<int>(m_length * m_scale) );
     int min = minimum();
@@ -151,7 +125,7 @@ void TimeSlider::paintEvent( QPaintEvent* event )
     painter.eraseRect( handleRect );
 
     // start to draw
-    drawGroove( painter, grooveRect );
+    drawGroove( painter, handleRect );
     drawHandle( painter, handleRect );
 }
 
@@ -159,41 +133,37 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
 {
     painter.setPen( QPen( m_grooveColor, 1, Qt::SolidLine, Qt::SquareCap ) );
 
-    int startX = rect.left() + m_offset.x(), endX = rect.right() - m_offset.x();
-    int startY = rect.center().y(), endY = m_offset.y() + startY;
+    float startX = rect.width()*0.5, endX = width() - rect.width();
+    float startY = rect.center().y(), endY = startY + m_labelSize;
 
     int largeCount = qMax( m_longBarCount, static_cast<int>(m_longBarCount * (1.0f - m_scale)) );
     int labelCount = qMax( 3, static_cast<int>(m_labelCount * m_scale) );
 
-    QVector<QLineF> lines;
+    QVector<QLine> lines;
 
     // vertical bar for time line
-    lines.append( QLineF( startX, endY, endX, endY ) );
+    lines.append( QLine( startX, endY, endX + startX, endY ) );
 
     int range = getRange();
-    float division = 1.0f / range;
-
-    int w = endX - startX;
-    float interval = w * division;
-    float prev = -m_interval;
+    int prev = -m_interval;
     int barCount = 0;
 
     for (int i = 0; i <= range; ++i)
     {
-        float x = startX + i * interval;
+        int x = (float)i / (float)range * endX + startX;
 
         if (x - prev < m_interval)
             continue;
 
         if (barCount % largeCount == 0)
         {
-            lines.append( QLineF( x, startY, x, endY ) );
+            lines.append( QLine( x, startY, x, endY ) );
 
             if (barCount % labelCount == 0)
                 drawLabel( painter, minimum() + i, QPoint( x, startY ) );
         }
         else
-            lines.append( QLineF( x, endY - 5, x, endY ) );
+            lines.append( QLine( x, endY - 5, x, endY ) );
 
         prev = x;
         barCount++;

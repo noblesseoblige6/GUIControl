@@ -12,7 +12,7 @@ class TimeSliderBar : public QFrame
         Q_DISABLE_COPY( TimeSliderBar )
 
 public:
-    TimeSliderBar( QWidget *parent );
+    TimeSliderBar( QWidget *parent = nullptr);
 
     ~TimeSliderBar();
 

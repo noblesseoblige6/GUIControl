@@ -58,10 +58,8 @@ private:
     int m_length;
     float m_scale;
 
-    float m_interval;
+    int m_interval;
     int m_longBarCount;
-
-    QPoint m_offset;
 
     int m_labelSize;
     int m_labelCount;
@@ -71,7 +69,5 @@ private:
 
     QVector<QPoint> m_handleShape;
 
-    QScrollBar* m_rangeSlider;
-    QSlider* m_scaleSlider;
     TimeSliderBar* m_pTimeBar;
 };
