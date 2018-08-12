@@ -1,15 +1,7 @@
 #pragma once
-
-#include <QWidget>
 #include "ui_TrackLine.h"
-#include <QGraphicsScene>
-#include <QGraphicsItem>
-#include <QGraphicsView>
-#include <QGraphicsProxyWidget>
-#include <QPushButton>
-#include <QLayout>
 
-class TrackLine : public QWidget
+class TrackLine : public QGraphicsView
 {
     Q_OBJECT
 
@@ -20,7 +12,6 @@ public:
 private:
     Ui::TrackLine ui;
 
-    QGraphicsView* m_graphicsView;
     QGraphicsScene* m_scene;
     QList<QGraphicsScene*> m_sceneItems;
 };

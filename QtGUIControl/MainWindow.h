@@ -1,6 +1,4 @@
 #pragma once
-
-#include <QtWidgets/QMainWindow>
 #include "ui_MainWindow.h"
 
 class MainWindow : public QMainWindow

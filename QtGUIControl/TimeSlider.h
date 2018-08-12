@@ -1,14 +1,4 @@
 #pragma once
-
-#include <QWidget>
-#include <QScrollBar>
-#include <QSlider>
-#include <QPainter>
-#include <QLine>
-#include <QtGui>
-#include <QtWidgets/QHBoxLayout>
-#include <QStyleOptionSlider>
-
 #include "TimeSliderBar.h"
 
 class TimeSliderBar;
