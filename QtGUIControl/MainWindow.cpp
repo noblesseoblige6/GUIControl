@@ -1,13 +1,11 @@
-#include "MainWindow.h"
 
 MainWindow::MainWindow( QWidget *parent )
     : QMainWindow( parent )
 {
     ui.setupUi( this );
 
-    connect( ui.TimeScale, SIGNAL( valueChanged( int ) ), ui.TimeLine, SLOT( onScaleChanged( int ) ) );
-    connect( ui.TimeRange, SIGNAL( valueChanged( int ) ), ui.TimeLine, SLOT( onRangeChanged( int ) ) );
-
+    connect( ui.TimeScale, SIGNAL( valueChanged( int ) ), ui.TrackView->m_timeSlider, SLOT( onScaleChanged( int ) ) );
+    connect( ui.TimeRange, SIGNAL( valueChanged( int ) ), ui.TrackView->m_timeSlider, SLOT( onRangeChanged( int ) ) );
 }
 
 void MainWindow::onTimeScaleChanged( int val )

@@ -18,19 +18,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="TimeSlider" name="TimeLine" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="TrackLine" name="widget" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_4"/>
-       </widget>
+       <widget class="TrackLine" name="TrackView"/>
       </item>
       <item>
        <widget class="QSlider" name="TimeScale">
@@ -76,16 +64,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>TimeSlider</class>
-   <extends>QWidget</extends>
-   <header>timeslider.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>TrackLine</class>
-   <extends>QWidget</extends>
+   <extends>QGraphicsView</extends>
    <header>trackline.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

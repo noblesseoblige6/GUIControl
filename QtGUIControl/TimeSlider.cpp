@@ -1,4 +1,3 @@
-#include "TimeSlider.h"
 
 TimeSlider::TimeSlider( QWidget *parent )
     : QSlider( parent )
@@ -48,7 +47,7 @@ void TimeSlider::onScaleChanged( int val )
 
     int range = qMax( 1, static_cast<int>(m_length * m_scale) );
     int min = minimum();
-    int max = min + range;
+    int max = qMin(min + range, m_length);
 
     setRange( min, max );
 
@@ -59,7 +58,7 @@ void TimeSlider::onScaleChanged( int val )
 void TimeSlider::onRangeChanged( int val )
 {
     int min = static_cast<float>(val) / 99.0f * m_length;
-    int max = min + getRange();
+    int max = qMin(min + getRange(), m_length);
 
     setRange( min, max );
 
@@ -141,9 +140,6 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
 
     QVector<QLine> lines;
 
-    // vertical bar for time line
-    lines.append( QLine( startX, endY, endX + startX, endY ) );
-
     int range = getRange();
     int prev = -m_interval;
     int barCount = 0;
@@ -168,6 +164,9 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
         prev = x;
         barCount++;
     }
+
+    // vertical bar for time line
+    lines.append( QLine( startX, endY, prev, endY ) );
 
     painter.drawLines( lines );
 }

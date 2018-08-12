@@ -18,3 +18,8 @@
 #include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
+
+#include "MainWindow.h"
+
+#include "TrackLine.h"
+#include "TimeSlider.h"

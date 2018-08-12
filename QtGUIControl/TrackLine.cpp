@@ -1,26 +1,43 @@
-#include "TrackLine.h"
 
 TrackLine::TrackLine(QWidget *parent)
-    : QWidget(parent)
+    : QGraphicsView(parent)
 {
     ui.setupUi(this);
 
-    m_graphicsView = new QGraphicsView();
+    setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+
     m_scene = new QGraphicsScene();
 
-    QGraphicsRectItem *rect_item = new QGraphicsRectItem( 50, 50, 100, 100 );
-    QPushButton* label = new QPushButton();
-    label->setText( "TesT" );
-    m_scene->addItem( rect_item );
-    rect_item->setRotation( 45 );
+    m_timeSlider = new TimeSlider();
+    proxyWidget = m_scene->addWidget( m_timeSlider );
 
-    QGraphicsProxyWidget* proxyWidget = m_scene->addWidget( label );
-    proxyWidget->setRotation( 90 );
+    proxyWidget->setPos( 0, 0 );
 
-    m_graphicsView->setScene( m_scene );
-    //m_graphicsView->show();
+    setScene( m_scene );
+
+    setAlignment( Qt::AlignTop | Qt::AlignLeft );
+    setMouseTracking( true );
 }
 
 TrackLine::~TrackLine()
 {
+}
+
+void TrackLine::mousePressEvent( QMouseEvent* event )
+{
+    qDebug() << event->pos();
+    QGraphicsView::mousePressEvent( event );
+}
+
+void TrackLine::resizeEvent( QResizeEvent *event )
+{
+    int w = event->size().width();
+    int h = event->size().height();
+    m_scene->setSceneRect( 0, 0, w, h );
+
+    QRectF rect = QRectF( 0.f, 0.f, w, proxyWidget->geometry().height() );
+    proxyWidget->setGeometry( rect );
+
+    QGraphicsView::resizeEvent( event );
 }
