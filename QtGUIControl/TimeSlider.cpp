@@ -2,7 +2,7 @@
 TimeSlider::TimeSlider( QWidget *parent )
     : QSlider( parent )
     , m_currentFrame( 0 )
-    , m_length( 1000 )
+    , m_length( 100 )
     , m_scale( 1.0f )
     , m_interval( 10 )
     , m_longBarCount( 5 )
@@ -39,6 +39,18 @@ TimeSlider::TimeSlider( QWidget *parent )
 
 TimeSlider::~TimeSlider()
 {
+}
+
+void TimeSlider::setLength( int length )
+{
+    m_length = length; 
+
+    int min = minimum();
+    int max = m_length;
+
+    setRange( min, max );
+
+    emit lengthChanged( m_length );
 }
 
 void TimeSlider::onScaleChanged( int val )

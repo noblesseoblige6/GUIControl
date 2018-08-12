@@ -33,8 +33,13 @@ public:
     void setCurrentFrame( int frame );
 
     int getRange() const { return maximum() - minimum(); }
+
+    int getLength() const { return m_length; }
+    void setLength( int length );
 signals:
     void sliderMoved( QPoint );
+    void lengthChanged( int );
+
 
     public slots :
     void onScaleChanged( int val );

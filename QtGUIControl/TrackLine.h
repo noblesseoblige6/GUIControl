@@ -2,6 +2,7 @@
 #include "ui_TrackLine.h"
 
 class TimeSlider;
+class TrackScene;
 class TrackLine : public QGraphicsView
 {
     Q_OBJECT
@@ -14,13 +15,14 @@ protected:
     void mousePressEvent( QMouseEvent *event );
     void resizeEvent( QResizeEvent *event );
 
-public:
-    TimeSlider* m_timeSlider;
-
+    public slots:
+    void onTimeScaleChanged(int val);
+    void onTimeRangeChanged( int val );
 private:
     Ui::TrackLine ui;
 
-    QGraphicsScene* m_scene;
+    TimeSlider* m_timeSlider;
+    TrackScene* m_scene;
 
     QGraphicsProxyWidget* proxyWidget;
 };
