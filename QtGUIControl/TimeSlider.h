@@ -60,7 +60,6 @@ private:
     int m_longBarCount;
 
     int m_labelSize;
-    int m_labelCount;
 
     QColor m_handleColor;
     QColor m_grooveColor;

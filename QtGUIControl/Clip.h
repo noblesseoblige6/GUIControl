@@ -9,7 +9,7 @@ public:
     ~Clip();
     
 protected:
-    void updatePosition();
+    void update();
 
 protected:
     void mousePressEvent( QGraphicsSceneMouseEvent* event );
@@ -20,7 +20,7 @@ protected:
     void paint( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     protected slots:
-    void onTimeScaleChanged();
+    void onChanged();
 
 private:
     QRectF  m_rect; // driven from the model

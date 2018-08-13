@@ -7,7 +7,6 @@ TimeSlider::TimeSlider( QWidget *parent )
     , m_interval( 10 )
     , m_longBarCount( 5 )
     , m_labelSize( 10 )
-    , m_labelCount( 5 )
     , m_handleColor( QColor( 255, 0, 0, 128 ) )
     , m_grooveColor( Qt::black )
 {
@@ -62,7 +61,7 @@ int TimeSlider::getSliderPositionFromValue( int val )
 
     int length = width() - rect.width();
 
-    return (float)val / (float)getRange() * length;
+    return (float)(val-minimum()) / (float)getRange() * length;
 }
 
 void TimeSlider::onTimeScaleChanged( int val )
@@ -82,7 +81,7 @@ void TimeSlider::onTimeScaleChanged( int val )
 void TimeSlider::onTimeRangeChanged( int val )
 {
     int min = static_cast<float>(val) / 99.0f * m_duration;
-    int max = qMin(min + getRange(), m_duration);
+    int max = qMin(maximum(), m_duration);
 
     setRange( min, max );
 
@@ -160,8 +159,7 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
     float startX = rect.width()*0.5;
     float startY = rect.center().y(), endY = startY + m_labelSize;
 
-    int largeCount = qMax( m_longBarCount, static_cast<int>(m_longBarCount * (1.0f - m_timeScale)) );
-    int labelCount = qMax( 3, static_cast<int>(m_labelCount * m_timeScale) );
+    int largeCount =  qMax( m_longBarCount, static_cast<int>(m_longBarCount * (1.0f - m_timeScale)) );
 
     QVector<QLine> lines;
 
@@ -169,7 +167,7 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
     int prev = -m_interval;
     int barCount = 0;
 
-    for (int i = 0; i <= range; ++i)
+    for (int i = minimum(); i <= maximum(); ++i)
     {
         int x = getSliderPositionFromValue(i) + startX;
 
@@ -180,8 +178,7 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
         {
             lines.append( QLine( x, startY, x, endY ) );
 
-            if (barCount % labelCount == 0)
-                drawLabel( painter, minimum() + i, QPoint( x, startY ) );
+            drawLabel( painter, i, QPoint( x, startY ) );
         }
         else
             lines.append( QLine( x, endY - 5, x, endY ) );

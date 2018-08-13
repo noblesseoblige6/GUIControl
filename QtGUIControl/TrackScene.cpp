@@ -2,7 +2,6 @@
 TrackScene::TrackScene( QObject *parent )
     : QGraphicsScene( parent )
     , m_duration( 0 )
-    , m_timeScale( 1.0f )
 {
 }
 
@@ -12,7 +11,8 @@ TrackScene::~TrackScene()
 
 void TrackScene::addItem( Clip *item )
 {
-    connect( this, SIGNAL( timeScaleChanged() ), item, SLOT( onTimeScaleChanged() ));
+    connect( this, SIGNAL( timeScaleChanged() ), item, SLOT( onChanged() ) );
+    connect( this, SIGNAL( timeRangeChanged() ), item, SLOT( onChanged() ));
     
     QGraphicsScene::addItem( item );
 }
@@ -22,6 +22,7 @@ void TrackScene::setTimeSliderWidget( TimeSlider* timeSlider )
     connect( timeSlider, SIGNAL( durationChanged( int ) ), this, SLOT( onDurationChanged( int ) ) );
 
     m_proxyTimeSlider = QGraphicsScene::addWidget( timeSlider );
+    m_proxyTimeSlider->setZValue( 100.0f );
 }
 
 int TrackScene::getTimeSliderValueFromPosition( QPointF pos )
@@ -42,11 +43,19 @@ float TrackScene::getTimeSliderPositionFromValue( int val)
 {
     TimeSlider* slider = static_cast<TimeSlider*>(m_proxyTimeSlider->widget());
 
-    QPointF pos( slider->getSliderPositionFromValue(val), 0 );
+    QPointF pos( slider->getSliderPositionFromValue( val), 0 );
     QPointF itemPos = m_proxyTimeSlider->mapToScene( pos );
 
     return itemPos.x();
 }
+
+bool TrackScene::isInTimeSliderRange( int frame)
+{
+    TimeSlider* slider = static_cast<TimeSlider*>(m_proxyTimeSlider->widget());
+
+    return frame <= slider->maximum() && frame >= slider->minimum();
+}
+
 
 void TrackScene::onDurationChanged( int length)
 {

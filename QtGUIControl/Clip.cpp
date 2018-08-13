@@ -42,7 +42,7 @@ void Clip::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     m_currentFrame = curScene->getTimeSliderValueFromPosition( scenePos - d );
 
 #if 1
-    updatePosition();
+    update();
 #else
     // Modified data in the model and notify changes
 #endif
@@ -61,19 +61,27 @@ void Clip::paint( QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     Q_UNUSED( widget );
 }
 
-void Clip::onTimeScaleChanged()
+void Clip::onChanged()
 {
     // モデルの値に応じて位置を変更する
-    updatePosition();
+    update();
 }
 
-void Clip::updatePosition()
+void Clip::update()
 {
     TrackScene* curScene = static_cast<TrackScene*>(scene());
     if (curScene == nullptr)
         return;
 
-    float x = curScene->getTimeSliderPositionFromValue( m_currentFrame );
+    bool isInRange = curScene->isInTimeSliderRange( m_currentFrame ) |
+                     curScene->isInTimeSliderRange( m_currentFrame + m_duration );
 
-    setPos( x, pos().y() );
+    setVisible( isInRange );
+
+    if (isInRange)
+    {
+        float x = curScene->getTimeSliderPositionFromValue( m_currentFrame );
+
+        setPos( x, pos().y() );
+    }
 }
