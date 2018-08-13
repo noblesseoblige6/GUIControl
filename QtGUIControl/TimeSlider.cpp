@@ -2,8 +2,8 @@
 TimeSlider::TimeSlider( QWidget *parent )
     : QSlider( parent )
     , m_currentFrame( 0 )
-    , m_length( 100 )
-    , m_scale( 1.0f )
+    , m_duration( 100 )
+    , m_timeScale( 1.0f )
     , m_interval( 10 )
     , m_longBarCount( 5 )
     , m_labelSize( 10 )
@@ -17,7 +17,7 @@ TimeSlider::TimeSlider( QWidget *parent )
     m_pTimeBar->setColor( m_handleColor );
 
     setValue( 0 );
-    setRange( 0, m_length );
+    setRange( 0, m_duration );
 
     setOrientation( Qt::Horizontal );
 
@@ -41,16 +41,16 @@ TimeSlider::~TimeSlider()
 {
 }
 
-void TimeSlider::setLength( int length )
+void TimeSlider::setDuration( int length )
 {
-    m_length = length; 
+    m_duration = length; 
 
     int min = minimum();
-    int max = m_length;
+    int max = m_duration;
 
     setRange( min, max );
 
-    emit lengthChanged( m_length );
+    emit durationChanged( m_duration );
 }
 
 int TimeSlider::getSliderPositionFromValue( int val )
@@ -65,13 +65,13 @@ int TimeSlider::getSliderPositionFromValue( int val )
     return (float)val / (float)getRange() * length;
 }
 
-void TimeSlider::onScaleChanged( int val )
+void TimeSlider::onTimeScaleChanged( int val )
 {
-    m_scale = static_cast<float>(val + 1) / 100.0f;
+    m_timeScale = static_cast<float>(val + 1) / 100.0f;
 
-    int range = qMax( 1, static_cast<int>(m_length * m_scale) );
+    int range = qMax( 1, static_cast<int>(m_duration * m_timeScale) );
     int min = minimum();
-    int max = qMin(min + range, m_length);
+    int max = qMin(min + range, m_duration);
 
     setRange( min, max );
 
@@ -79,10 +79,10 @@ void TimeSlider::onScaleChanged( int val )
     setValue( m_currentFrame );
 }
 
-void TimeSlider::onRangeChanged( int val )
+void TimeSlider::onTimeRangeChanged( int val )
 {
-    int min = static_cast<float>(val) / 99.0f * m_length;
-    int max = qMin(min + getRange(), m_length);
+    int min = static_cast<float>(val) / 99.0f * m_duration;
+    int max = qMin(min + getRange(), m_duration);
 
     setRange( min, max );
 
@@ -160,8 +160,8 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
     float startX = rect.width()*0.5;
     float startY = rect.center().y(), endY = startY + m_labelSize;
 
-    int largeCount = qMax( m_longBarCount, static_cast<int>(m_longBarCount * (1.0f - m_scale)) );
-    int labelCount = qMax( 3, static_cast<int>(m_labelCount * m_scale) );
+    int largeCount = qMax( m_longBarCount, static_cast<int>(m_longBarCount * (1.0f - m_timeScale)) );
+    int labelCount = qMax( 3, static_cast<int>(m_labelCount * m_timeScale) );
 
     QVector<QLine> lines;
 

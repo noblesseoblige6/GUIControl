@@ -34,27 +34,27 @@ public:
 
     int getRange() const { return maximum() - minimum(); }
 
-    int getLength() const { return m_length; }
-    void setLength( int length );
+    int getDuration() const { return m_duration; }
+    void setDuration( int length );
 
     int getSliderPositionFromValue( int val );
 
 signals:
     void sliderMoved( QPoint );
-    void lengthChanged( int );
+    void durationChanged( int );
 
 
     public slots :
-    void onScaleChanged( int val );
-    void onRangeChanged( int val );
+    void onTimeScaleChanged( int val );
+    void onTimeRangeChanged( int val );
     void onSliderValueChanged( int val );
     void onTimeBarChanged( int );
 
 private:
     int m_currentFrame;
 
-    int m_length;
-    float m_scale;
+    int m_duration;
+    float m_timeScale;
 
     int m_interval;
     int m_longBarCount;

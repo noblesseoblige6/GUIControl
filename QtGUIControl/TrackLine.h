@@ -1,8 +1,8 @@
 #pragma once
-#include "ui_TrackLine.h"
 
 class TimeSlider;
 class TrackScene;
+
 class TrackLine : public QGraphicsView
 {
     Q_OBJECT
@@ -18,9 +18,8 @@ protected:
     public slots:
     void onTimeScaleChanged(int val);
     void onTimeRangeChanged( int val );
-private:
-    Ui::TrackLine ui;
 
+private:
     TimeSlider* m_timeSlider;
     TrackScene* m_scene;
 };

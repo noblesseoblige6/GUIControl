@@ -11,12 +11,12 @@ public:
 
     void addItem( Clip *item );
 
-    void setLength( int length )
+    void setDuration( int duration )
     {
-        m_length = length;
+        m_duration = duration;
     }
 
-    int getLength() const { return m_length; }
+    int getDuration() const { return m_duration; }
 
     void setTimeScale( float scale )
     {
@@ -26,12 +26,7 @@ public:
 
     float getTimeScale() const { return m_timeScale; }
 
-    float getPitch() const
-    {
-        return sceneRect().width() / (m_length * m_timeScale);
-    }
-
-    QGraphicsProxyWidget* setTimeSliderWidget( TimeSlider* timeSlider );
+    void setTimeSliderWidget( TimeSlider* timeSlider );
 
     int getTimeSliderValueFromPosition( QPointF );
     float getTimeSliderPositionFromValue( int );
@@ -40,10 +35,10 @@ signals:
     void timeScaleChanged();
 
     public slots:
-    void onLengthChanged( int );
+    void onDurationChanged( int );
 
 private:
-    int m_length;
+    int   m_duration;
     float m_timeScale;
     QGraphicsProxyWidget* m_proxyTimeSlider;
 };

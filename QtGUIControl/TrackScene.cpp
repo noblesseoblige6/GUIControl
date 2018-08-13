@@ -1,7 +1,7 @@
 
 TrackScene::TrackScene( QObject *parent )
     : QGraphicsScene( parent )
-    , m_length( 0 )
+    , m_duration( 0 )
     , m_timeScale( 1.0f )
 {
 }
@@ -17,13 +17,11 @@ void TrackScene::addItem( Clip *item )
     QGraphicsScene::addItem( item );
 }
 
-QGraphicsProxyWidget* TrackScene::setTimeSliderWidget( TimeSlider* timeSlider )
+void TrackScene::setTimeSliderWidget( TimeSlider* timeSlider )
 {
-    connect( timeSlider, SIGNAL( lengthChanged( int ) ), this, SLOT( onLengthChanged( int ) ) );
+    connect( timeSlider, SIGNAL( durationChanged( int ) ), this, SLOT( onDurationChanged( int ) ) );
 
     m_proxyTimeSlider = QGraphicsScene::addWidget( timeSlider );
-
-    return m_proxyTimeSlider;
 }
 
 int TrackScene::getTimeSliderValueFromPosition( QPointF pos )
@@ -50,7 +48,7 @@ float TrackScene::getTimeSliderPositionFromValue( int val)
     return itemPos.x();
 }
 
-void TrackScene::onLengthChanged( int length)
+void TrackScene::onDurationChanged( int length)
 {
-    setLength( length );
+    setDuration( length );
 }
