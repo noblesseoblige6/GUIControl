@@ -11,10 +11,6 @@ public:
     TrackLine(QWidget *parent = Q_NULLPTR);
     ~TrackLine();
 
-public:
-    int getTimeSliderValueFromPosition(int pos);
-    int getTimeSliderPositionFromValue();
-
 protected:
     void mousePressEvent( QMouseEvent *event );
     void resizeEvent( QResizeEvent *event );
@@ -27,6 +23,4 @@ private:
 
     TimeSlider* m_timeSlider;
     TrackScene* m_scene;
-
-    QGraphicsProxyWidget* proxyWidget;
 };

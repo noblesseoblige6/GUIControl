@@ -119,7 +119,8 @@ bool TimeSlider::eventFilter( QObject* watched, QEvent* event )
                 {
                     setCurrentFrame( val );
                 }
-                qDebug() << val << " " << QStyle::sliderPositionFromValue(minimum(), maximum(), val, width() );
+
+                QStyle::sliderPositionFromValue(minimum(), maximum(), val, width() );
                 return true;
             }
         }

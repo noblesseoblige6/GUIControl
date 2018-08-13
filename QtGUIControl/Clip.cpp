@@ -39,12 +39,10 @@ void Clip::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     if (curScene == nullptr)
         return;
 
-    int val = curScene->getTimeSliderValueFromPosition( scenePos - d );
+    m_currentFrame = curScene->getTimeSliderValueFromPosition( scenePos - d );
 
 #if 1
-    float x = curScene->getTimeSliderPositionFromValue( val );
-
-    setPos( x, pos().y() );
+    updatePosition();
 #else
     // Modified data in the model and notify changes
 #endif
@@ -54,7 +52,6 @@ QRectF Clip::boundingRect() const
 {
     return m_rect;
 }
-
 
 void Clip::paint( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
@@ -67,4 +64,16 @@ void Clip::paint( QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 void Clip::onTimeScaleChanged()
 {
     // モデルの値に応じて位置を変更する
+    updatePosition();
+}
+
+void Clip::updatePosition()
+{
+    TrackScene* curScene = static_cast<TrackScene*>(scene());
+    if (curScene == nullptr)
+        return;
+
+    float x = curScene->getTimeSliderPositionFromValue( m_currentFrame );
+
+    setPos( x, pos().y() );
 }

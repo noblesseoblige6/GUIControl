@@ -7,6 +7,9 @@ public:
     Clip( QGraphicsItem *parent = nullptr );
     Clip( const QRectF& rect,  QGraphicsItem *parent = nullptr );
     ~Clip();
+    
+protected:
+    void updatePosition();
 
 protected:
     void mousePressEvent( QGraphicsSceneMouseEvent* event );
@@ -20,9 +23,11 @@ protected:
     void onTimeScaleChanged();
 
 private:
-    QRectF  m_rect;
+    QRectF  m_rect; // driven from the model
     QPointF m_mousePos;
     QPointF m_prevPos;
 
-    int m_frame;
+    // data which model should have
+    int m_currentFrame;
+    int m_duration;
 };
