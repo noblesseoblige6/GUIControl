@@ -32,17 +32,22 @@ void Clip::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 
 void Clip::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
 {
-    QPointF delta = event->scenePos() - m_mousePos;
-    
+    QPointF scenePos = event->scenePos();
+    QPointF d(scenePos.x() - pos().x(), 0.0f);
+
     TrackScene* curScene = static_cast<TrackScene*>(scene());
     if (curScene == nullptr)
         return;
 
-    float pitch = curScene->getPitch();
+    int val = curScene->getTimeSliderValueFromPosition( scenePos - d );
 
-    int count = delta.x() / pitch;
+#if 1
+    float x = curScene->getTimeSliderPositionFromValue( val );
 
-    setPos( m_prevPos.x() + pitch * count, 0 );
+    setPos( x, pos().y() );
+#else
+    // Modified data in the model and notify changes
+#endif
 }
 
 QRectF Clip::boundingRect() const
@@ -53,11 +58,8 @@ QRectF Clip::boundingRect() const
 
 void Clip::paint( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
-    QPolygon polygon;
-    painter->setBrush( Qt::red );
     painter->drawPolygon( m_rect );
-    //painter->drawPolygon( polygon );
-    
+
     Q_UNUSED( option );
     Q_UNUSED( widget );
 }

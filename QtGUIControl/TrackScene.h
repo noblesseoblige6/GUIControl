@@ -11,8 +11,6 @@ public:
 
     void addItem( Clip *item );
 
-    QGraphicsProxyWidget* addWidget( QWidget *widget, Qt::WindowFlags wFlags = Qt::WindowFlags() );
-
     void setLength( int length )
     {
         m_length = length;
@@ -33,6 +31,11 @@ public:
         return sceneRect().width() / (m_length * m_timeScale);
     }
 
+    QGraphicsProxyWidget* setTimeSliderWidget( TimeSlider* timeSlider );
+
+    int getTimeSliderValueFromPosition( QPointF );
+    float getTimeSliderPositionFromValue( int );
+
 signals:
     void timeScaleChanged();
 
@@ -42,4 +45,5 @@ signals:
 private:
     int m_length;
     float m_timeScale;
+    QGraphicsProxyWidget* m_proxyTimeSlider;
 };

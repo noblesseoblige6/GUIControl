@@ -11,6 +11,10 @@ public:
     TrackLine(QWidget *parent = Q_NULLPTR);
     ~TrackLine();
 
+public:
+    int getTimeSliderValueFromPosition(int pos);
+    int getTimeSliderPositionFromValue();
+
 protected:
     void mousePressEvent( QMouseEvent *event );
     void resizeEvent( QResizeEvent *event );

@@ -10,7 +10,7 @@ TrackLine::TrackLine(QWidget *parent)
     m_scene = new TrackScene(parent);
 
     m_timeSlider = new TimeSlider();
-    proxyWidget = m_scene->addWidget( m_timeSlider );
+    proxyWidget = m_scene->setTimeSliderWidget( m_timeSlider );
     m_timeSlider->setLength( 20 );
     proxyWidget->setPos( 0, 0 );
 

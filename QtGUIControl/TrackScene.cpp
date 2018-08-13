@@ -17,11 +17,37 @@ void TrackScene::addItem( Clip *item )
     QGraphicsScene::addItem( item );
 }
 
-QGraphicsProxyWidget* TrackScene::addWidget( QWidget *widget, Qt::WindowFlags wFlags )
+QGraphicsProxyWidget* TrackScene::setTimeSliderWidget( TimeSlider* timeSlider )
 {
-    connect( widget, SIGNAL( lengthChanged(int) ), this, SLOT( onLengthChanged(int) ) );
+    connect( timeSlider, SIGNAL( lengthChanged( int ) ), this, SLOT( onLengthChanged( int ) ) );
 
-    return QGraphicsScene::addWidget( widget, wFlags );
+    m_proxyTimeSlider = QGraphicsScene::addWidget( timeSlider );
+
+    return m_proxyTimeSlider;
+}
+
+int TrackScene::getTimeSliderValueFromPosition( QPointF pos )
+{
+    QPointF itemPos = m_proxyTimeSlider->mapFromScene( pos );
+
+    TimeSlider* slider = static_cast<TimeSlider*>(m_proxyTimeSlider->widget());
+
+    int val = QStyle::sliderValueFromPosition( slider->minimum(),
+                                               slider->maximum(),
+                                               itemPos.x(),
+                                               slider->width() );
+
+    return val;
+}
+
+float TrackScene::getTimeSliderPositionFromValue( int val)
+{
+    TimeSlider* slider = static_cast<TimeSlider*>(m_proxyTimeSlider->widget());
+
+    QPointF pos( slider->getSliderPositionFromValue(val), 0 );
+    QPointF itemPos = m_proxyTimeSlider->mapToScene( pos );
+
+    return itemPos.x();
 }
 
 void TrackScene::onLengthChanged( int length)

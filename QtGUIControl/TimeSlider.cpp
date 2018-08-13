@@ -53,6 +53,18 @@ void TimeSlider::setLength( int length )
     emit lengthChanged( m_length );
 }
 
+int TimeSlider::getSliderPositionFromValue( int val )
+{
+    QStyleOptionSlider opt;
+
+    opt.subControls = QStyle::SC_SliderHandle;
+    QRect rect = style()->subControlRect( QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this );
+
+    int length = width() - rect.width();
+
+    return (float)val / (float)getRange() * length;
+}
+
 void TimeSlider::onScaleChanged( int val )
 {
     m_scale = static_cast<float>(val + 1) / 100.0f;
@@ -107,7 +119,7 @@ bool TimeSlider::eventFilter( QObject* watched, QEvent* event )
                 {
                     setCurrentFrame( val );
                 }
-
+                qDebug() << val << " " << QStyle::sliderPositionFromValue(minimum(), maximum(), val, width() );
                 return true;
             }
         }
@@ -144,7 +156,7 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
 {
     painter.setPen( QPen( m_grooveColor, 1, Qt::SolidLine, Qt::SquareCap ) );
 
-    float startX = rect.width()*0.5, endX = width() - rect.width();
+    float startX = rect.width()*0.5;
     float startY = rect.center().y(), endY = startY + m_labelSize;
 
     int largeCount = qMax( m_longBarCount, static_cast<int>(m_longBarCount * (1.0f - m_scale)) );
@@ -158,7 +170,7 @@ void TimeSlider::drawGroove( QPainter& painter, QRect& rect )
 
     for (int i = 0; i <= range; ++i)
     {
-        int x = (float)i / (float)range * endX + startX;
+        int x = getSliderPositionFromValue(i) + startX;
 
         if (x - prev < m_interval)
             continue;

@@ -20,7 +20,9 @@ protected:
     void onTimeScaleChanged();
 
 private:
-    QRectF m_rect;
+    QRectF  m_rect;
     QPointF m_mousePos;
     QPointF m_prevPos;
+
+    int m_frame;
 };

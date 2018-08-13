@@ -36,6 +36,9 @@ public:
 
     int getLength() const { return m_length; }
     void setLength( int length );
+
+    int getSliderPositionFromValue( int val );
+
 signals:
     void sliderMoved( QPoint );
     void lengthChanged( int );
