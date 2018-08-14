@@ -11,6 +11,13 @@ MainWindow::MainWindow( QWidget *parent )
 
 void MainWindow::onTimeScaleChanged( int val )
 {
-    float scale = (val + 1) / 100.0f;
-    ui.TimeRange->setMaximum( (1.0f-scale) * 99 );
+    float scale = 1.0f - ((val + 1) / 100.0f);
+    
+    int max = qMax(1, ui.TimeRange->maximum());
+
+    int newMax = scale * 99;
+    int newVal = ui.TimeRange->value() / max * newMax;
+
+    ui.TimeRange->setMaximum( newMax );
+    ui.TimeRange->setValue( newVal );
 }

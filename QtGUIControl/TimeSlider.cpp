@@ -68,9 +68,19 @@ void TimeSlider::onTimeScaleChanged( int val )
 {
     m_timeScale = static_cast<float>(val + 1) / 100.0f;
 
-    int range = qMax( 10, static_cast<int>(m_duration * m_timeScale) );
-    int min = minimum();
-    int max = qMin(min + range, m_duration);
+    int range = qMax( 10, static_cast<int>(m_duration * m_timeScale * 0.5) );
+    
+    int min, max;
+    if (isFrameInRange())
+    {
+        min = qMax( 0, m_currentFrame - range );
+        max = qMin( m_currentFrame + range, m_duration );
+    }
+    else
+    {
+        min = minimum();
+        max = qMin( min + range, m_duration );
+    }
 
     setRange( min, max );
 
