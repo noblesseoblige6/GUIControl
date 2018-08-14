@@ -39,6 +39,8 @@ public:
 
     int getSliderPositionFromValue( int val );
 
+    TimeSliderBar* getVertivalBar(){ return m_pTimeBar; }
+
 signals:
     void sliderMoved( QPoint );
     void durationChanged( int );
@@ -49,7 +51,7 @@ signals:
     void onTimeRangeChanged( int val );
     void onSliderValueChanged( int val );
     void onTimeBarChanged( int );
-
+    void onReachedBound(int);
 private:
     int m_currentFrame;
 

@@ -19,6 +19,7 @@ TimeSlider::TimeSlider( QWidget *parent )
     setRange( 0, m_duration );
 
     setOrientation( Qt::Horizontal );
+    setSliderDown( true );
 
     installEventFilter( this );
 
@@ -33,6 +34,7 @@ TimeSlider::TimeSlider( QWidget *parent )
     connect( this, SIGNAL( valueChanged( int ) ), SLOT( onSliderValueChanged( int ) ) );
     connect( this, SIGNAL( rangeChanged( int, int ) ), SLOT( onSliderRangeChanged() ) );
     connect( this, SIGNAL( sliderMoved( QPoint ) ), m_pTimeBar, SLOT( onTimelineChanged( QPoint ) ) );
+    connect( this, SIGNAL( sliderMoved(int) ), SLOT( onReachedBound(int) ) );
     connect( m_pTimeBar, SIGNAL( barMoved( int ) ), this, SLOT( onTimeBarChanged( int ) ) );
 }
 
@@ -66,8 +68,8 @@ int TimeSlider::getSliderPositionFromValue( int val )
 
 void TimeSlider::onTimeScaleChanged( int val )
 {
-    m_timeScale = static_cast<float>(val + 1) / 100.0f;
-
+    m_timeScale = static_cast<float>(val+1) / 100.0f;
+    //int range = (1.0f - m_timeScale) * 10 + m_timeScale * m_duration;
     int range = qMax( 10, static_cast<int>(m_duration * m_timeScale * 0.5) );
     
     int min, max;
@@ -114,6 +116,31 @@ void TimeSlider::onTimeBarChanged( int pos )
     int val = QStyle::sliderValueFromPosition( minimum(), maximum(), pos, width() );
     setCurrentFrame( val );
 }
+
+void TimeSlider::onReachedBound(int val)
+{
+    if (val == maximum())
+    {
+        if (maximum() == m_duration)
+            return;
+
+        int min = minimum() + 1;
+        int max = maximum() + 1;
+        setRange( min, max );
+        setCurrentFrame(max);
+    }
+    else if (val == minimum())
+    {
+        if (minimum() == 0)
+            return;
+
+        int min = minimum() - 1;
+        int max = maximum() - 1;
+        setRange( min, max );
+        setCurrentFrame( min );
+    }
+}
+
 
 bool TimeSlider::eventFilter( QObject* watched, QEvent* event )
 {
@@ -234,6 +261,9 @@ void TimeSlider::drawLabel( QPainter& painter, int value, QPoint& point )
 
 void TimeSlider::setCurrentFrame( int frame )
 {
+    if (m_currentFrame == frame)
+        return;
+
     m_currentFrame = frame;
     setValue( frame );
 }
