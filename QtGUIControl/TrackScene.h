@@ -15,7 +15,7 @@ public:
     int getDuration() const { return m_duration; }
 
     void setTimeSliderWidget( TimeSlider* timeSlider );
-
+    void resizeTimeSlider(const QSizeF& size);
     int getTimeSliderValueFromPosition( QPointF );
     float getTimeSliderPositionFromValue( int );
 
@@ -32,4 +32,5 @@ private:
     int   m_duration;
 
     QGraphicsProxyWidget* m_proxyTimeSlider;
+    QGraphicsProxyWidget* m_proxyTimeSliderBar;
 };

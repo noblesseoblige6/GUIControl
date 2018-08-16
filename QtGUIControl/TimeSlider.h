@@ -52,6 +52,7 @@ signals:
     void onSliderValueChanged( int val );
     void onTimeBarChanged( int );
     void onReachedBound(int);
+
 private:
     int m_currentFrame;
 

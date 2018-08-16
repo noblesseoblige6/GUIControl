@@ -27,7 +27,7 @@ void Clip::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 {
     QPointF delta = event->scenePos() - m_mousePos;
 
-    setPos(m_prevPos.x() + delta.x(), 0 );
+    setPos(m_prevPos.x() + delta.x(), y() );
 }
 
 void Clip::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )

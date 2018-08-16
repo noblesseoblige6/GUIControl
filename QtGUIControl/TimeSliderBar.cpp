@@ -2,7 +2,7 @@
 
 TimeSliderBar::TimeSliderBar( QWidget *parent )
     : QFrame( parent )
-    , m_range( 6 )
+    , m_range( 3 )
     , m_barWidth( 1 )
     , m_color( Qt::red )
 {
@@ -55,9 +55,7 @@ void TimeSliderBar::onTimelineChanged( QPoint point )
     if (children.last() != this)
         raise();
 
-    QRect parentRect = parentWidget()->rect();
-
-    QRect rect( point.x() - m_range*0.5, point.y(), m_range, parentRect.height() );
+    QRect rect( point.x() - m_range*0.5, point.y(), m_range, height() );
     setGeometry( rect );
 
     update();
