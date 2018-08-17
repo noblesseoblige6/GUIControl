@@ -1,9 +1,8 @@
 
 TrackScene::TrackScene( QObject *parent )
     : QGraphicsScene( parent )
-    , m_duration( 0 )
     , m_proxyTimeSlider( nullptr )
-   , m_proxyTimeSliderBar( nullptr )
+    , m_proxyTimeSliderBar( nullptr )
 {
 }
 
@@ -23,8 +22,6 @@ void TrackScene::addItem( Clip *item )
 
 void TrackScene::setTimeSliderWidget( TimeSlider* timeSlider )
 {
-    connect( timeSlider, SIGNAL( durationChanged( int ) ), this, SLOT( onDurationChanged( int ) ) );
-
     m_proxyTimeSlider = addWidget( timeSlider );
     m_proxyTimeSlider->setZValue( 100.0f );
 
@@ -91,9 +88,4 @@ bool TrackScene::isInTimeSliderRange( int frame)
     TimeSlider* slider = static_cast<TimeSlider*>(m_proxyTimeSlider->widget());
 
     return frame <= slider->maximum() && frame >= slider->minimum();
-}
-
-void TrackScene::onDurationChanged( int length)
-{
-    setDuration( length );
 }

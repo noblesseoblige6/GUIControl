@@ -11,9 +11,6 @@ public:
 
     void addItem( Clip *item );
 
-    void setDuration( int duration ){ m_duration = duration; }
-    int getDuration() const { return m_duration; }
-
     void setTimeSliderWidget( TimeSlider* timeSlider );
     void resizeTimeSlider(const QSizeF& size);
     int getTimeSliderValueFromPosition( QPointF );
@@ -25,12 +22,7 @@ signals:
     void timeScaleChanged();
     void timeRangeChanged();
 
-    public slots:
-    void onDurationChanged( int );
-
 private:
-    int   m_duration;
-
     QGraphicsProxyWidget* m_proxyTimeSlider;
     QGraphicsProxyWidget* m_proxyTimeSliderBar;
 };
