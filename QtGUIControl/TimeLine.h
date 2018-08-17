@@ -11,6 +11,9 @@ public:
     TimeLine(QWidget *parent = Q_NULLPTR);
     ~TimeLine();
 
+    TimeSlider* getTimeSlider() { return m_timeSlider; }
+    TimeLineScene* getScene() { return m_scene; }
+
 protected:
     void mousePressEvent( QMouseEvent *event );
     void resizeEvent( QResizeEvent *event );
@@ -20,6 +23,6 @@ protected:
     void onTimeRangeChanged( int val );
 
 private:
-    TimeSlider* m_timeSlider;
+    TimeSlider*    m_timeSlider;
     TimeLineScene* m_scene;
 };

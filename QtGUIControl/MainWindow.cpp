@@ -4,20 +4,36 @@ MainWindow::MainWindow( QWidget *parent )
 {
     ui.setupUi( this );
 
+    connect( ui.TimeLineView->getTimeSlider(), SIGNAL( timeScaleChanged( int ) ), this, SLOT( onTimeScaleChanged( int ) ) );
+    connect( ui.TimeLineView->getTimeSlider(), SIGNAL( durationChanged( int ) ), this, SLOT( onDurationChanged( int )) );
     connect( ui.TimeScale, SIGNAL( valueChanged( int ) ), ui.TimeLineView, SLOT( onTimeScaleChanged( int ) ) );
-    connect( ui.TimeScale, SIGNAL( valueChanged( int ) ), this, SLOT( onTimeScaleChanged( int ) ) );
     connect( ui.TimeRange, SIGNAL( valueChanged( int ) ), ui.TimeLineView, SLOT( onTimeRangeChanged( int ) ) );
+
+    ui.TimeLineView->getTimeSlider()->setDuration( 100 );
+
+    Clip* clip = new Clip( QRectF( 5, 0, 100, 100 ) );
+    ui.TimeLineView->getScene()->addItem( clip );
 }
 
-void MainWindow::onTimeScaleChanged( int val )
+void MainWindow::onTimeScaleChanged( int value )
 {
-    float scale = 1.0f - ((val + 1) / 100.0f);
+    int duration = ui.TimeLineView->getTimeSlider()->getDuration();
+    int range = ui.TimeLineView->getTimeSlider()->getRange();
+
+    int max = duration - range;
+
+    int oldMax = qMax( 1, ui.TimeRange->maximum() );
+    int oldVal = ui.TimeRange->value();
+    int val = oldVal / oldMax * max;
     
-    int max = qMax(1, ui.TimeRange->maximum());
+    ui.TimeRange->setMaximum( max );
+    ui.TimeRange->setValue( val );
 
-    int newMax = scale * 99;
-    int newVal = ui.TimeRange->value() / max * newMax;
+    //qDebug() <<oldVal << " " << ui.TimeRange->value();
+}
 
-    ui.TimeRange->setMaximum( newMax );
-    ui.TimeRange->setValue( newVal );
+void MainWindow::onDurationChanged( int val )
+{
+    ui.TimeScale->setMaximum( val );
+    ui.TimeScale->setValue( val );
 }

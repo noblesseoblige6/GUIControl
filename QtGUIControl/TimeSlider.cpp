@@ -46,7 +46,7 @@ void TimeSlider::setDuration( int length )
 {
     m_duration = length; 
 
-    int min = minimum();
+    int min = 0;
     int max = m_duration;
 
     setRange( min, max );
@@ -68,9 +68,8 @@ int TimeSlider::getSliderPositionFromValue( int val )
 
 void TimeSlider::onTimeScaleChanged( int val )
 {
-    m_timeScale = static_cast<float>(val+1) / 100.0f;
-    //int range = (1.0f - m_timeScale) * 10 + m_timeScale * m_duration;
-    int range = qMax( 10, static_cast<int>(m_duration * m_timeScale * 0.5) );
+    m_timeScale = static_cast<float>(val) / m_duration;
+    int range = qMax( 10, static_cast<int>(m_duration * m_timeScale) );
     
     int min, max;
     if (isFrameInRange())
@@ -88,12 +87,14 @@ void TimeSlider::onTimeScaleChanged( int val )
 
     // overwrite value because handle position is based on this value
     setValue( m_currentFrame );
+
+    emit timeScaleChanged( val );
 }
 
 void TimeSlider::onTimeRangeChanged( int val )
 {
     int range = qMax( 10, static_cast<int>(m_duration * m_timeScale) );
-    int min = static_cast<float>(val) / 99.0f * m_duration;
+    int min = val;
     int max = qMin( min + range, m_duration );
 
     if (max == m_duration)
@@ -119,26 +120,26 @@ void TimeSlider::onTimeBarChanged( int pos )
 
 void TimeSlider::onReachedBound(int val)
 {
-    if (val == maximum())
-    {
-        if (maximum() == m_duration)
-            return;
+    //if (val == maximum())
+    //{
+    //    if (maximum() == m_duration)
+    //        return;
 
-        int min = minimum() + 1;
-        int max = maximum() + 1;
-        setRange( min, max );
-        setCurrentFrame(max);
-    }
-    else if (val == minimum())
-    {
-        if (minimum() == 0)
-            return;
+    //    int min = minimum() + 1;
+    //    int max = maximum() + 1;
+    //    setRange( min, max );
+    //    setCurrentFrame(max);
+    //}
+    //else if (val == minimum())
+    //{
+    //    if (minimum() == 0)
+    //        return;
 
-        int min = minimum() - 1;
-        int max = maximum() - 1;
-        setRange( min, max );
-        setCurrentFrame( min );
-    }
+    //    int min = minimum() - 1;
+    //    int max = maximum() - 1;
+    //    setRange( min, max );
+    //    setCurrentFrame( min );
+    //}
 }
 
 
@@ -266,4 +267,6 @@ void TimeSlider::setCurrentFrame( int frame )
 
     m_currentFrame = frame;
     setValue( frame );
+
+    emit currentFrameChanged(m_currentFrame);
 }

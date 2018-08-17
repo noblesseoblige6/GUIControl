@@ -44,7 +44,8 @@ public:
 signals:
     void sliderMoved( QPoint );
     void durationChanged( int );
-
+    void timeScaleChanged( int );
+    void currentFrameChanged( int );
 
     public slots :
     void onTimeScaleChanged( int val );

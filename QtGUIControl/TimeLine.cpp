@@ -9,10 +9,6 @@ TimeLine::TimeLine(QWidget *parent)
 
     m_timeSlider = new TimeSlider();
     m_scene->setTimeSliderWidget( m_timeSlider );
-    m_timeSlider->setDuration( 100 );
-
-    Clip* clip = new Clip( QRectF( 5, 0, 100, 100 ) );
-    m_scene->addItem( clip );
 
     setScene( m_scene );
 
@@ -42,7 +38,6 @@ void TimeLine::resizeEvent( QResizeEvent *event )
 
 void TimeLine::onTimeScaleChanged( int val )
 {
-    float scale = (float)(val + 1) / 100;
     m_timeSlider->onTimeScaleChanged( val );
 
     emit m_scene->timeScaleChanged();
