@@ -1,11 +1,11 @@
 
-TrackLine::TrackLine(QWidget *parent)
+TimeLine::TimeLine(QWidget *parent)
     : QGraphicsView(parent)
 {
     setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
 
-    m_scene = new TrackScene(parent);
+    m_scene = new TimeLineScene(parent);
 
     m_timeSlider = new TimeSlider();
     m_scene->setTimeSliderWidget( m_timeSlider );
@@ -20,16 +20,16 @@ TrackLine::TrackLine(QWidget *parent)
     setMouseTracking( true );
 }
 
-TrackLine::~TrackLine()
+TimeLine::~TimeLine()
 {
 }
 
-void TrackLine::mousePressEvent( QMouseEvent* event )
+void TimeLine::mousePressEvent( QMouseEvent* event )
 {
     QGraphicsView::mousePressEvent( event );
 }
 
-void TrackLine::resizeEvent( QResizeEvent *event )
+void TimeLine::resizeEvent( QResizeEvent *event )
 {
     int w = event->size().width();
     int h = event->size().height();
@@ -40,7 +40,7 @@ void TrackLine::resizeEvent( QResizeEvent *event )
     QGraphicsView::resizeEvent( event );
 }
 
-void TrackLine::onTimeScaleChanged( int val )
+void TimeLine::onTimeScaleChanged( int val )
 {
     float scale = (float)(val + 1) / 100;
     m_timeSlider->onTimeScaleChanged( val );
@@ -48,7 +48,7 @@ void TrackLine::onTimeScaleChanged( int val )
     emit m_scene->timeScaleChanged();
 }
 
-void TrackLine::onTimeRangeChanged( int val )
+void TimeLine::onTimeRangeChanged( int val )
 {
     m_timeSlider->onTimeRangeChanged( val );
 

@@ -1,15 +1,15 @@
 #pragma once
 
 class TimeSlider;
-class TrackScene;
+class TimeLineScene;
 
-class TrackLine : public QGraphicsView
+class TimeLine : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    TrackLine(QWidget *parent = Q_NULLPTR);
-    ~TrackLine();
+    TimeLine(QWidget *parent = Q_NULLPTR);
+    ~TimeLine();
 
 protected:
     void mousePressEvent( QMouseEvent *event );
@@ -21,5 +21,5 @@ protected:
 
 private:
     TimeSlider* m_timeSlider;
-    TrackScene* m_scene;
+    TimeLineScene* m_scene;
 };

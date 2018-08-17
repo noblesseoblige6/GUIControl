@@ -4,9 +4,9 @@ MainWindow::MainWindow( QWidget *parent )
 {
     ui.setupUi( this );
 
-    connect( ui.TimeScale, SIGNAL( valueChanged( int ) ), ui.TrackView, SLOT( onTimeScaleChanged( int ) ) );
+    connect( ui.TimeScale, SIGNAL( valueChanged( int ) ), ui.TimeLineView, SLOT( onTimeScaleChanged( int ) ) );
     connect( ui.TimeScale, SIGNAL( valueChanged( int ) ), this, SLOT( onTimeScaleChanged( int ) ) );
-    connect( ui.TimeRange, SIGNAL( valueChanged( int ) ), ui.TrackView, SLOT( onTimeRangeChanged( int ) ) );
+    connect( ui.TimeRange, SIGNAL( valueChanged( int ) ), ui.TimeLineView, SLOT( onTimeRangeChanged( int ) ) );
 }
 
 void MainWindow::onTimeScaleChanged( int val )

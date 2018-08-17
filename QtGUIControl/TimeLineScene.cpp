@@ -1,16 +1,16 @@
 
-TrackScene::TrackScene( QObject *parent )
+TimeLineScene::TimeLineScene( QObject *parent )
     : QGraphicsScene( parent )
     , m_proxyTimeSlider( nullptr )
     , m_proxyTimeSliderBar( nullptr )
 {
 }
 
-TrackScene::~TrackScene()
+TimeLineScene::~TimeLineScene()
 {
 }
 
-void TrackScene::addItem( Clip *item )
+void TimeLineScene::addItem( Clip *item )
 {
     connect( this, SIGNAL( timeScaleChanged() ), item, SLOT( onChanged() ) );
     connect( this, SIGNAL( timeRangeChanged() ), item, SLOT( onChanged() ));
@@ -20,7 +20,7 @@ void TrackScene::addItem( Clip *item )
     QGraphicsScene::addItem( item );
 }
 
-void TrackScene::setTimeSliderWidget( TimeSlider* timeSlider )
+void TimeLineScene::setTimeSliderWidget( TimeSlider* timeSlider )
 {
     m_proxyTimeSlider = addWidget( timeSlider );
     m_proxyTimeSlider->setZValue( 100.0f );
@@ -29,7 +29,7 @@ void TrackScene::setTimeSliderWidget( TimeSlider* timeSlider )
     m_proxyTimeSliderBar->setZValue( 99.0f );
 }
 
-void TrackScene::resizeTimeSlider( const QSizeF& size )
+void TimeLineScene::resizeTimeSlider( const QSizeF& size )
 {
     int w = size.width();
     int h = size.height();
@@ -59,7 +59,7 @@ void TrackScene::resizeTimeSlider( const QSizeF& size )
     }
 }
 
-int TrackScene::getTimeSliderValueFromPosition( QPointF pos )
+int TimeLineScene::getTimeSliderValueFromPosition( QPointF pos )
 {
     QPointF itemPos = m_proxyTimeSlider->mapFromScene( pos );
 
@@ -73,7 +73,7 @@ int TrackScene::getTimeSliderValueFromPosition( QPointF pos )
     return val;
 }
 
-float TrackScene::getTimeSliderPositionFromValue( int val)
+float TimeLineScene::getTimeSliderPositionFromValue( int val)
 {
     TimeSlider* slider = static_cast<TimeSlider*>(m_proxyTimeSlider->widget());
 
@@ -83,7 +83,7 @@ float TrackScene::getTimeSliderPositionFromValue( int val)
     return itemPos.x();
 }
 
-bool TrackScene::isInTimeSliderRange( int frame)
+bool TimeLineScene::isInTimeSliderRange( int frame)
 {
     TimeSlider* slider = static_cast<TimeSlider*>(m_proxyTimeSlider->widget());
 

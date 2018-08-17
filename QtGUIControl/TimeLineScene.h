@@ -1,13 +1,13 @@
 #pragma once
 
 class Clip;
-class TrackScene : public QGraphicsScene
+class TimeLineScene : public QGraphicsScene
 {
     Q_OBJECT
 
 public:
-    TrackScene(QObject *parent = nullptr);
-    ~TrackScene();
+    TimeLineScene(QObject *parent = nullptr);
+    ~TimeLineScene();
 
     void addItem( Clip *item );
 

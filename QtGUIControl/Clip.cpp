@@ -35,7 +35,7 @@ void Clip::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     QPointF scenePos = event->scenePos();
     QPointF d(scenePos.x() - pos().x(), 0.0f);
 
-    TrackScene* curScene = static_cast<TrackScene*>(scene());
+    TimeLineScene* curScene = static_cast<TimeLineScene*>(scene());
     if (curScene == nullptr)
         return;
 
@@ -69,7 +69,7 @@ void Clip::onChanged()
 
 void Clip::update()
 {
-    TrackScene* curScene = static_cast<TrackScene*>(scene());
+    TimeLineScene* curScene = static_cast<TimeLineScene*>(scene());
     if (curScene == nullptr)
         return;
 

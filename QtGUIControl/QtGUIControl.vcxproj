@@ -131,8 +131,8 @@
     </ClCompile>
     <ClCompile Include="TimeSlider.cpp" />
     <ClCompile Include="TimeSliderBar.cpp" />
-    <ClCompile Include="TrackLine.cpp" />
-    <ClCompile Include="TrackScene.cpp" />
+    <ClCompile Include="TimeLine.cpp" />
+    <ClCompile Include="TimeLineScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MainWindow.h" />
@@ -150,12 +150,12 @@
     <QtMoc Include="TimeSliderBar.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="TrackLine.h" />
+    <QtMoc Include="TimeLine.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Clip.h" />
     <ClInclude Include="PCH.h" />
-    <QtMoc Include="TrackScene.h" />
+    <QtMoc Include="TimeLineScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

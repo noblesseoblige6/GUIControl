@@ -22,7 +22,7 @@
 
 #include "MainWindow.h"
 
-#include "TrackScene.h"
-#include "TrackLine.h"
+#include "TimeLineScene.h"
+#include "TimeLine.h"
 #include "TimeSlider.h"
 #include "Clip.h"
