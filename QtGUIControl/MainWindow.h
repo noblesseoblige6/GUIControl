@@ -9,7 +9,6 @@ public:
     MainWindow(QWidget *parent = Q_NULLPTR);
 
     public slots:
-    void onTimeScaleChanged( int );
     void onDurationChanged(int);
 
 private:

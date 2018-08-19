@@ -20,7 +20,7 @@ protected:
 
     public slots:
     void onTimeScaleChanged(int val);
-    void onTimeRangeChanged( int val );
+    void onTimeRangeChanged( int val, int left, int right );
 
 private:
     TimeSlider*    m_timeSlider;

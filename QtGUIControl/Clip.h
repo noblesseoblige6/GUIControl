@@ -8,6 +8,8 @@ public:
     Clip( const QRectF& rect,  QGraphicsItem *parent = nullptr );
     ~Clip();
     
+    int getCurrentFrame() const { return m_currentFrame; }
+
 protected:
     void update();
 
@@ -22,7 +24,7 @@ protected:
     protected slots:
     void onChanged();
 
-private:
+protected:
     QRectF  m_rect; // driven from the model
     QPointF m_mousePos;
     QPointF m_prevPos;

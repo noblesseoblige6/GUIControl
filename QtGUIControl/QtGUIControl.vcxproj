@@ -129,6 +129,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SceneClip.cpp" />
+    <ClCompile Include="TimeScrollBar.cpp" />
     <ClCompile Include="TimeSlider.cpp" />
     <ClCompile Include="TimeSliderBar.cpp" />
     <ClCompile Include="TimeLine.cpp" />
@@ -153,6 +155,8 @@
     <QtMoc Include="TimeLine.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="TimeScrollBar.h" />
+    <QtMoc Include="SceneClip.h" />
     <QtMoc Include="Clip.h" />
     <ClInclude Include="PCH.h" />
     <QtMoc Include="TimeLineScene.h" />

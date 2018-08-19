@@ -43,9 +43,9 @@ void TimeLine::onTimeScaleChanged( int val )
     emit m_scene->timeScaleChanged();
 }
 
-void TimeLine::onTimeRangeChanged( int val )
+void TimeLine::onTimeRangeChanged( int val, int left, int right )
 {
-    m_timeSlider->onTimeRangeChanged( val );
+    m_timeSlider->onTimeRangeChanged( val, left, right );
 
     emit m_scene->timeRangeChanged();
 }

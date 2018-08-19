@@ -88,18 +88,14 @@ void TimeSlider::onTimeScaleChanged( int val )
     // overwrite value because handle position is based on this value
     setValue( m_currentFrame );
 
-    emit timeScaleChanged( val );
+    emit timeScaleChanged( min, max );
 }
 
-void TimeSlider::onTimeRangeChanged( int val )
+void TimeSlider::onTimeRangeChanged( int val, int left, int right )
 {
-    int range = qMax( 10, static_cast<int>(m_duration * m_timeScale) );
-    int min = val;
-    int max = qMin( min + range, m_duration );
-
-    if (max == m_duration)
-        min = max - range;
-
+    int min = qMax(0, val-left);
+    int max = val + right;//qMin(val+right, m_duration);
+    qDebug() << min << " " << max;
     setRange( min, max );
 
     // overwrite value because handle position is based on this value

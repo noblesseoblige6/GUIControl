@@ -25,4 +25,6 @@
 #include "TimeLineScene.h"
 #include "TimeLine.h"
 #include "TimeSlider.h"
+#include "TimeScrollBar.h"
 #include "Clip.h"
+#include "SceneClip.h"

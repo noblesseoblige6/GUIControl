@@ -20,7 +20,6 @@ protected:
     void drawGroove( QPainter& painter, QRect& rect );
     void drawLabel( QPainter& painter, int value, QPoint& point );
 
-    bool isFrameInRange() { return m_currentFrame <= maximum() && m_currentFrame >= minimum(); }
 
 public:
     const QColor& getHandleColor() const { return m_handleColor; }
@@ -41,15 +40,18 @@ public:
 
     TimeSliderBar* getVertivalBar(){ return m_pTimeBar; }
 
+    bool isFrameInRange() { return m_currentFrame <= maximum() && m_currentFrame >= minimum(); }
+
+
 signals:
     void sliderMoved( QPoint );
     void durationChanged( int );
-    void timeScaleChanged( int );
+    void timeScaleChanged( int, int );
     void currentFrameChanged( int );
 
     public slots :
     void onTimeScaleChanged( int val );
-    void onTimeRangeChanged( int val );
+    void onTimeRangeChanged( int val, int left, int right );
     void onSliderValueChanged( int val );
     void onTimeBarChanged( int );
     void onReachedBound(int);

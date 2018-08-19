@@ -25,6 +25,12 @@
     <ClCompile Include="TimeLineScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SceneClip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeScrollBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="TimeSliderBar.h">
@@ -43,6 +49,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="TimeLineScene.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="SceneClip.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="TimeScrollBar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
